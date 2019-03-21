@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.dao.userDao">
+    <resultMap id="selectResult" type="com.manager.model.user">
+        <id column="c_id" jdbcType="INTEGER" property="id"/>
+        <id column="c_name" jdbcType="VARCHAR" property="name"/>
+        <id column="c_state" jdbcType="INTEGER" property="state"/>
+        <id column="c_password" jdbcType="VARCHAR" property="password"/>
+        <id column="c_balance" jdbcType="DOUBLE" property="balance"/>
+    </resultMap>
+    <select id="queryUser" parameterType="java.util.Map" resultMap="selectResult">
+        select * from customer
+        where 1=1
+        <if test="id != null">
+            and c_id = #{id}
+        </if>
+        <if test="name != null">
+            and c_name = #{name}
+        </if>
+        <if test="state != null">
+            and c_state = #{state}
+        </if>
+        <if test="password != null">
+            and c_password = #{password}
+        </if>
+    </select>
+</mapper>
