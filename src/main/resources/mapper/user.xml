@@ -24,4 +24,64 @@
             and c_password = #{password}
         </if>
     </select>
+    <update id="updateUser" parameterType="java.util.Map">
+        update customer set
+        <if test="name != null">
+             c_name = #{name}
+        </if>
+        <if test="state != null">
+            ,c_state = #{state}
+        </if>
+        <if test="password != null">
+            ,c_password = #{password}
+        </if>
+        <if test="balance != null">
+            ,c_balance = #{balance}
+        </if>
+        where c_id = #{id}
+    </update>
+    <insert id="insertUser" parameterType="java.util.Map">
+        insert into customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                c_name,
+            </if>
+            <if test="state != null">
+                c_state,
+            </if>
+            <if test="password != null">
+                c_password,
+            </if>
+            <if test="balance != null">
+                c_balance,
+            </if>
+        </trim>
+          values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="state != null">
+                #{state},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="balance != null">
+                #{balance},
+            </if>
+        </trim>
+    </insert>
+    <delete id="deleteUser" parameterType="java.util.Map">
+        delete from customer where 1=1
+        <if test="id != null">
+            and c_id = #{id}
+        </if>
+        <if test="name != null">
+            and c_name = #{name}
+        </if>
+        <if test="state != null">
+            and c_state = #{state}
+        </if>
+    </delete>
 </mapper>

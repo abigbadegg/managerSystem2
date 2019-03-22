@@ -6,15 +6,18 @@ function mylogin(){
     user.password = $("input[name='password']").val();
 
     //信息校验
-    checkInfo(user);
+    var res = checkInfo(user);
     //检查是否存在该用户
-    var isUser = getUser(user);
-
-    if(isUser > 0){
-        alert("登录成功！！！");
-    }else{
-        alert("账号或密码错误！！！");
+    if(res == true) {
+        getUser(user, function (result) {
+            if (result > 0) {
+                window.location.href = "firstPage.html";
+            } else {
+                alert("账号或密码错误！！！");
+            }
+        });
     }
+
 }
 
 function myRegister(){
@@ -25,42 +28,39 @@ function myRegister(){
 
     //信息校验
     checkInfo(user);
-    //检查是否存在该用户
-    var isUser = getUser(user);
+    addUser(user,function(result){
+        if (result == 1) {
+            window.location.href="firstPage.html";
 
-    if(isUser > 0){
-        alert("该用户名已存在");
-        return;
-    }
-    var num = setUser(user);
+        }else{
+            alert("登录失败");
+        }
+    });
+
 }
 
 function checkInfo(user){
+    var res = true;
     if(user.role != 1 && user.role != 2){
         alert("请选择登录身份");
-        return;
+        res = false;
     }
     if(user.name == null || user.name.length < 2 || user.name.length > 16){
         alert("请规范填写名称,长度在2到12位之间");
-        return;
+        res = false;
     }
     if(user.password == null || user.password.length < 3 || user.password.length > 16){
         alert("请规范填写密码，长度在3到12位之间");
-        return;
+        res = false;
     }
+    return res;
 }
 
 //检查是否存在该用户 com.manager.controller.
-function getUser(user){
-    $.post("./userController/getUser.do",user,function(result,state){
-        var isUser = result;
-    });
-    return isUser;
+function getUser(user,callback){
+    $.post("../../userController/getUser.do",user,callback);
 }
 
-function setUser(user){
-    $.post("./userController/setUser.do",user,function(result,state){
-        var num = result;
-    });
-    return num;
+function addUser(user,callback){
+    $.post("../../userController/addUser.do",user,callback);
 }

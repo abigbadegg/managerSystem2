@@ -6,4 +6,7 @@ import java.util.Map;
 
 public interface userService {
     ArrayList<User> queryUser(Map<String,Object> param);
+    Long updateUser(Map<String,Object> params);
+    Long insertUser(Map<String,Object> params);
+    Long deleteUser(Map<String,Object> params);
 }

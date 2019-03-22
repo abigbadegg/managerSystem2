@@ -19,4 +19,19 @@ public class userServiceImpl implements userService {
         userList  = userDao.queryUser(param);
         return userList;
     }
+
+    public Long insertUser(Map<String,Object> param){
+        Long insertResult  = userDao.insertUser(param);
+        return insertResult;
+    }
+
+    public Long updateUser(Map<String,Object> param){
+        Long updatetResult  = userDao.updateUser(param);
+        return updatetResult;
+    }
+
+    public Long deleteUser(Map<String,Object> param){
+        Long deleteResult  = userDao.deleteUser(param);
+        return deleteResult;
+    }
 }
